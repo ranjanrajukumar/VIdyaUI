@@ -1,18 +1,8 @@
-import React from 'react'
-import './App.css'
-import Login from './components/login'
+// src/App.tsx
+import LoginPage from '@/features/auth/pages/LoginPage';
 
 function App() {
-
-  return (
-    <>
-      <div>
-        <Login />
-      </div>
-      
-      
-    </>
-  )
+  return <LoginPage />;
 }
 
-export default App
+export default App;
