@@ -14,11 +14,39 @@ const LoginForm = ({ onLogin }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow-md">
-      <h2 className="text-lg font-bold mb-4">Login</h2>
-      <input type="text" placeholder="User ID" value={userId} onChange={e => setUserId(e.target.value)} required className="w-full p-2 border mb-3" />
-      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full p-2 border mb-3" />
-      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">Login</button>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-1">User ID</label>
+        <input
+          type="text"
+          id="userId"
+          value={userId}
+          onChange={e => setUserId(e.target.value)}
+          required
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter your user ID"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
+      >
+        Login
+      </button>
     </form>
   );
 };
