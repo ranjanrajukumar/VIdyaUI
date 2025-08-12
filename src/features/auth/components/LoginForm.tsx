@@ -11,6 +11,7 @@ const LoginForm = ({ onLogin }: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onLogin(userId, password);
+    console.log("shreya");
   };
 
   return (
