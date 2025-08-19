@@ -24,7 +24,7 @@ const LoginPage = () => {
       );
       console.log(res.data.token);
       setToken(res.data.token);
-      navigate('/home');
+      navigate('/menu');
       setMessage("✅ Login successful!");
     } catch (error) {
       setMessage(
