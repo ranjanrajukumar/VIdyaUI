@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const loginImage =
   "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80";
 
@@ -23,6 +24,7 @@ const LoginPage = () => {
       );
       console.log(res.data.token);
       setToken(res.data.token);
+      navigate('/home');
       setMessage("✅ Login successful!");
     } catch (error) {
       setMessage(
