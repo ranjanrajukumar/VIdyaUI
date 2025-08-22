@@ -4,4 +4,5 @@ export interface MenuItem {
   menuName: string;
   displayName: string;
   subMenus: MenuItem[];
+  icon: string;
 }
