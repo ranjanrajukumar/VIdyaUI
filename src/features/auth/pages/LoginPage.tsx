@@ -6,10 +6,14 @@ import { useNavigate } from "react-router-dom";
 const loginImage =
   "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80";
 
-const LoginPage = () => {
+interface LoginPageProps {
+  onLoginSuccess: () => void; // new prop to notify App
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   const [message, setMessage] = useState("");
-  const [token, setToken] = useState("");
   const navigate = useNavigate();
+
   const handleLogin = async (
     UserName: string,
     Password: string
@@ -22,9 +26,19 @@ const LoginPage = () => {
           Password,
         }
       );
-      console.log(res.data.token);
-      setToken(res.data.token);
-      navigate('/menu');
+
+      const token = res.data.token;
+      console.log("Received token:", token);
+
+      // ✅ Save token to localStorage
+      localStorage.setItem("token", token);
+
+      // ✅ Inform App.tsx that login succeeded
+      onLoginSuccess();
+
+      // ✅ Navigate to menu/dashboard page
+      navigate("/menu");
+
       setMessage("✅ Login successful!");
     } catch (error) {
       setMessage(
@@ -42,6 +56,7 @@ const LoginPage = () => {
         className="hidden md:block w-1/2 h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${loginImage})` }}
       ></div>
+
       {/* Right Login Form */}
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-6 sm:p-10 bg-gray-100 relative">
         {/* Circle image for mobile */}
@@ -52,21 +67,26 @@ const LoginPage = () => {
             className="w-24 h-24 rounded-full shadow-md object-cover border-4 border-white"
           />
         </div>
+
         {/* Login Card */}
         <div className="w-full max-w-md sm:max-w-lg bg-white rounded-2xl shadow-lg p-6 sm:p-8">
           <h1 className="text-center text-blue-700 font-extrabold text-3xl sm:text-4xl mb-2">
-            Vidya ERP
+            Welcome Back
           </h1>
           <p className="text-center text-gray-600 mb-6 text-sm sm:text-base">
             Login to access your dashboard
           </p>
+
+          {/* Pass handleLogin to LoginForm */}
           <LoginForm onLogin={handleLogin} />
+
           <p className="text-sm text-gray-500 mt-6 text-center">
             Forget Password?
             <a href="#" className="text-blue-600 hover:underline ml-1">
               Reset it
             </a>
           </p>
+
           {message && (
             <p className="mt-4 text-center text-sm text-gray-600">{message}</p>
           )}

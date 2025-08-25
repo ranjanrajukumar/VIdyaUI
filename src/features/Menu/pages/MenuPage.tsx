@@ -1,27 +1,41 @@
 import { useState } from "react";
 import { Settings, LogOut, MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import MenuTree from "../components/MenuTree";
 
 interface MenuPageProps {
   isCollapsed: boolean;
   setIsCollapsed: (value: boolean) => void;
+  onLogout: () => void; // ✅ new prop
 }
 
-export default function MenuPage({ isCollapsed, setIsCollapsed }: MenuPageProps) {
+export default function MenuPage({ isCollapsed, setIsCollapsed, onLogout }: MenuPageProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   // Expand if sidebar is manually open OR hovered
   const expanded = !isCollapsed || isHovered;
+
+  const handleLogout = () => {
+    // ✅ Clear token
+    localStorage.removeItem("token");
+
+    // ✅ Notify App to update login state
+    onLogout();
+
+    // ✅ Redirect to login
+    navigate("/");
+  };
 
   return (
     <aside
       className={`bg-white shadow-xl flex flex-col fixed h-screen z-40 transition-all duration-300 ease-in-out
         ${expanded ? "w-64" : "w-16"}`}
       onMouseEnter={() => {
-        if (isCollapsed) setIsHovered(true); // only expand on hover when collapsed
+        if (isCollapsed) setIsHovered(true);
       }}
       onMouseLeave={() => {
-        if (isCollapsed) setIsHovered(false); // shrink back when leaving if collapsed
+        if (isCollapsed) setIsHovered(false);
       }}
     >
       {/* Logo/Header */}
@@ -56,6 +70,7 @@ export default function MenuPage({ isCollapsed, setIsCollapsed }: MenuPageProps)
           {expanded && "Settings"}
         </button>
         <button
+          onClick={handleLogout} // ✅ Logout handler
           className={`flex items-center text-red-500 hover:text-red-700 transition ${
             expanded ? "gap-2" : "justify-center"
           }`}
